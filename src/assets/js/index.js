@@ -414,12 +414,20 @@ window.addEventListener('resize', () => { updateMobilePanel(); updateDescPanel()
 //   src    — path to your audio file (e.g. "audio/song.mp3"), leave "" if none
 // ─────────────────────────────────────────────────────────────────────────────
 const SONGS = [
-    { title: 'Ibang Planeta',              artist: 'Just for you 🤓', art: 'images/image_05.jpg', src: 'audio/Ibang%20Planeta.mp3' },
-    { title: 'Just the Way You Are',       artist: 'With love 💖',    art: 'images/image_00.jpg', src: 'audio/Just%20the%20Way%20You%20Are.mp3' },
-    { title: 'Kabisado',                   artist: 'Always 💘',       art: 'images/image_01.jpg', src: 'audio/Kabisado.mp3' },
-    { title: 'Libu-Libong Buwan (Uuwian)', artist: 'Together 🤝',     art: 'images/image_02.jpg', src: 'audio/Libu-Libong%20Buwan%20%28Uuwian%29.mp3' },
-    { title: 'Panata',                     artist: 'Forever ⏳',      art: 'images/image_03.jpg', src: 'audio/Panata.mp3' },
-    { title: 'Pinipili',                   artist: 'For us 🛠️',      art: 'images/image_04.jpg', src: 'audio/Pinipili.mp3' },
+    { title: 'Ibang Planeta', artist: 'Zild', art: 'images/image_05.jpg', src: 'assets/audio/Ibang Planeta_spotdown.org.mp3' },
+    { title: 'Just the Way You Are', artist: 'Bruno Mars', art: 'images/image_00.jpg', src: 'assets/audio/Just the Way You Are_spotdown.org.mp3' },
+    { title: 'Kabisado', artist: 'IV of SPADES', art: 'images/image_01.jpg', src: 'assets/audio/Kabisado_spotdown.org.mp3' },
+    { title: 'Libu-Libong Buwan (Uuwian)', artist: 'Kyle Raphael', art: 'images/image_02.jpg', src: 'assets/audio/Libu-Libong Buwan (Uuwian)_spotdown.org.mp3' },
+    { title: 'Panata', artist: 'Johnoy Danao', art: 'images/image_03.jpg', src: 'assets/audio/Panata_spotdown.org.mp3' },
+    { title: 'Pinipili', artist: 'MATÉO', art: 'images/image_04.jpg', src: 'assets/audio/Pinipili_spotdown.org.mp3' },
+    { title: 'Aphrodite', artist: 'The Ridleys', art: 'images/image_00.jpg', src: 'assets/audio/Aphrodite_spotdown.org.mp3' },
+    { title: 'Autumn', artist: 'NIKI', art: 'images/image_01.jpg', src: 'assets/audio/Autumn_spotdown.org.mp3' },
+    { title: 'Balisong - Transformed', artist: 'Rico Blanco', art: 'images/image_02.jpg', src: 'assets/audio/Balisong - Transformed_spotdown.org.mp3' },
+    { title: 'Ikaw At Ako', artist: 'Johnoy Danao', art: 'images/image_03.jpg', src: 'assets/audio/Ikaw At Ako_spotdown.org.mp3' },
+    { title: 'Inner Child', artist: 'Toneejay', art: 'images/image_04.jpg', src: 'assets/audio/Inner Child_spotdown.org.mp3' },
+    { title: 'Pag-ibig ng Ikaw at Ako', artist: 'TJ Monterde & KZ Tandingan', art: 'images/image_05.jpg', src: 'assets/audio/Pag-ibig ng Ikaw at Ako_spotdown.org.mp3' },
+    { title: 'Panaginip', artist: 'Ilaya', art: 'images/image_00.jpg', src: 'assets/audio/Panaginip_spotdown.org.mp3' },
+    { title: 'Ang Balikat At Baywang', artist: 'Dionela', art: 'images/image_01.jpg', src: 'assets/audio/ang balikat at baywang_spotdown.org.mp3' }
 ];
 
 (function initPlayer() {
@@ -492,13 +500,13 @@ const SONGS = [
 
         // Load audio if src provided
         if (song.src) {
-            audioEl.src = song.src;
+            audioEl.innerHTML = `<source id="audioSource" src="${song.src}" type="audio/mpeg">`;
             audioEl.load();
             if (autoPlay) audioEl.play().then(() => setPlayState(true)).catch(() => setPlayState(false));
             else setPlayState(false);
         } else {
             // No audio file — reset UI to paused
-            audioEl.removeAttribute('src');
+            audioEl.innerHTML = '';
             setPlayState(false);
             if (trackFill) trackFill.style.width = '0%';
             if (currentTimeEl) currentTimeEl.textContent = '0:00';

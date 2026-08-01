@@ -17,7 +17,7 @@
     },
     {
       "staticPath": "src/assets/audio",
-      "staticOutPath": "audio",
+      "staticOutPath": "assets/audio",
       "watcherGlob": "**"
     }
   ],
