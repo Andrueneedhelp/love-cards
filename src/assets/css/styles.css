@@ -55,7 +55,7 @@ main {
     border-radius: inherit;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(88, 28, 135, 0.3));
     pointer-events: none;
-  }
+  } 
 
   &:nth-child(1),
   &:nth-child(2) {
