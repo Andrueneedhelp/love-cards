@@ -1,10 +1,14 @@
 :root {
-  --bg-start: #140b2d;
-  --bg-end: #6d28d9;
+  --bg-start: #0c0618;
+  --bg-end: #5b21b6;
+  --bg-mid: #1e0a3c;
   --accent: #a855f7;
   --accent-strong: #7c3aed;
   --kuromi-pink: #ff7fbf;
   --kuromi-lilac: #c8a2ff;
+  --kuromi-deep: #9333ea;
+  --kuromi-glow: rgba(255, 127, 191, 0.55);
+  --star-color: rgba(255, 255, 255, 0.9);
   --panel-bg: rgba(88, 28, 135, 0.72);
   --panel-border: rgba(255, 255, 255, 0.2);
   --text-main: #fdf4ff;
@@ -22,7 +26,11 @@ body {
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+  background:
+    radial-gradient(ellipse at 25% 0%, rgba(168, 85, 247, 0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 100%, rgba(255, 127, 191, 0.28) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(30, 10, 60, 0.6) 0%, transparent 80%),
+    linear-gradient(160deg, var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%);
   color: var(--text-main);
 }
 
@@ -32,10 +40,12 @@ main {
   height: 100%;
   overflow: hidden;
   isolation: isolate;
-  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.35);
+  box-shadow: 0 20px 60px rgba(10, 5, 30, 0.6);
   background:
-    radial-gradient(circle at top, rgba(192, 132, 252, 0.24), transparent 60%),
-    linear-gradient(135deg, rgba(20, 11, 45, 0.95), rgba(109, 40, 217, 0.9));
+    radial-gradient(ellipse at 30% 0%, rgba(200, 162, 255, 0.22) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 100%, rgba(255, 127, 191, 0.18) 0%, transparent 50%),
+    radial-gradient(circle at top center, rgba(147, 51, 234, 0.3) 0%, transparent 60%),
+    linear-gradient(160deg, rgba(12, 6, 24, 0.98) 0%, rgba(30, 10, 60, 0.96) 50%, rgba(91, 33, 182, 0.92) 100%);
 }
 
 main::before {
@@ -43,13 +53,14 @@ main::before {
   position: absolute;
   inset: -10%;
   background-image:
-    radial-gradient(circle, rgba(255,255,255,0.95) 0 1px, transparent 2px),
-    radial-gradient(circle, rgba(255,255,255,0.72) 0 1.2px, transparent 2.2px),
-    radial-gradient(circle, rgba(243, 232, 255, 0.8) 0 1px, transparent 2px);
-  background-size: 180px 180px, 220px 220px, 260px 260px;
-  background-position: 0 0, 50px 90px, 120px 30px;
-  opacity: 1;
-  animation: driftStars 22s linear infinite;
+    radial-gradient(circle, rgba(255,255,255,0.98) 0 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(200,162,255,0.85) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle, rgba(255,127,191,0.75) 0 1px, transparent 1.6px),
+    radial-gradient(circle, rgba(255,255,255,0.65) 0 0.8px, transparent 1.4px);
+  background-size: 160px 160px, 200px 200px, 240px 240px, 120px 120px;
+  background-position: 0 0, 50px 90px, 120px 30px, 80px 150px;
+  opacity: 0.9;
+  animation: driftStars 30s linear infinite;
   pointer-events: none;
   z-index: 0;
 }
@@ -59,14 +70,14 @@ main::after {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.26) 0 1px, transparent 2px),
-    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.22) 0 1px, transparent 2px),
-    radial-gradient(circle at 50% 70%, rgba(255,255,255,0.2) 0 1px, transparent 2px),
-    linear-gradient(120deg, rgba(255, 127, 191, 0.22), rgba(255, 255, 255, 0) 45%, rgba(200, 162, 255, 0.2) 100%);
-  background-size: 140px 140px, 180px 180px, 220px 220px, 100% 100%;
-  opacity: 0.95;
-  filter: blur(2px);
-  animation: sparkle 4s ease-in-out infinite alternate;
+    radial-gradient(ellipse at 15% 15%, rgba(168, 85, 247, 0.45) 0%, transparent 40%),
+    radial-gradient(ellipse at 85% 20%, rgba(255, 127, 191, 0.35) 0%, transparent 35%),
+    radial-gradient(ellipse at 50% 85%, rgba(147, 51, 234, 0.3) 0%, transparent 40%),
+    radial-gradient(ellipse at 30% 60%, rgba(200, 162, 255, 0.2) 0%, transparent 35%),
+    linear-gradient(120deg, rgba(255, 127, 191, 0.12), rgba(255, 255, 255, 0) 45%, rgba(200, 162, 255, 0.12) 100%);
+  opacity: 1;
+  filter: blur(40px);
+  animation: glowPulse 8s ease-in-out infinite alternate;
   pointer-events: none;
   z-index: 0;
 }
@@ -74,41 +85,83 @@ main::after {
 main .aurora {
   position: absolute;
   inset: -20% -10% auto;
-  height: 42%;
+  height: 50%;
   z-index: 0;
   opacity: 1;
-  background: linear-gradient(90deg, rgba(255, 127, 191, 0.26), rgba(255,255,255,0.35), rgba(200, 162, 255, 0.24));
-  filter: blur(36px);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 127, 191, 0.45),
+    rgba(200, 162, 255, 0.55),
+    rgba(147, 51, 234, 0.4),
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 127, 191, 0.4)
+  );
+  filter: blur(50px);
   border-radius: 50%;
   transform: rotate(-12deg);
-  animation: auroraDrift 10s ease-in-out infinite alternate;
+  animation: auroraDrift 12s ease-in-out infinite alternate;
   pointer-events: none;
+}
+
+/* Secondary aurora bloom at bottom */
+main .aurora-bottom {
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  right: -10%;
+  height: 40%;
+  z-index: 0;
+  opacity: 0.6;
+  background: linear-gradient(
+    90deg,
+    rgba(147, 51, 234, 0.35),
+    rgba(255, 127, 191, 0.3),
+    rgba(200, 162, 255, 0.35)
+  );
+  filter: blur(55px);
+  border-radius: 50%;
+  animation: auroraDrift 15s ease-in-out infinite alternate-reverse;
+  pointer-events: none;
+}
+
+.star-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .corner-image {
   position: absolute;
-  width: clamp(90px, 12vw, 140px);
-  height: auto;
+  width: clamp(90px, 11vw, 135px);
+  height: clamp(90px, 11vw, 135px);
   object-fit: cover;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
-  opacity: 0.8;
-  z-index: 1;
+  object-position: center top;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 127, 191, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(200, 162, 255, 0.25),
+    0 12px 30px rgba(0, 0, 0, 0.45),
+    0 0 20px rgba(255, 127, 191, 0.25);
+  opacity: 0.9;
+  z-index: 3;
   pointer-events: none;
-  animation: floatCorner 5s ease-in-out infinite alternate;
+  backdrop-filter: blur(2px);
 }
 
 .corner-image-left {
-  left: 1.2rem;
-  top: 1.2rem;
-  transform: rotate(-8deg);
+  left: 1.4rem;
+  top: 1.4rem;
+  transform: rotate(-7deg);
+  animation: floatCornerLeft 6s ease-in-out infinite alternate;
 }
 
 .corner-image-right {
-  right: 1.2rem;
-  top: 1.2rem;
-  transform: rotate(8deg);
+  right: 1.4rem;
+  top: 1.4rem;
+  transform: rotate(7deg);
+  animation: floatCornerRight 7s ease-in-out 0.8s infinite alternate;
 }
 
 .item {
@@ -213,6 +266,11 @@ main .aurora {
   }
 }
 
+/* Mobile content panel (rendered by JS outside slider) — hidden on desktop */
+#mobile-content {
+  display: none;
+}
+
 .item:nth-of-type(2) .content {
   display: block;
   animation: show 0.75s ease-in-out 0.3s forwards;
@@ -234,39 +292,92 @@ main .aurora {
     transform: translateY(0px) translateX(0px);
   }
   to {
-    transform: translateY(-140px) translateX(40px);
+    transform: translateY(-160px) translateX(50px);
   }
 }
 
-@keyframes sparkle {
+@keyframes glowPulse {
   0% {
-    opacity: 0.18;
-    transform: scale(0.95) translateY(0);
+    opacity: 0.5;
+    transform: scale(0.97);
   }
   100% {
-    opacity: 0.72;
-    transform: scale(1.08) translateY(18px);
+    opacity: 1;
+    transform: scale(1.04);
   }
 }
 
 @keyframes auroraDrift {
   0% {
-    transform: rotate(-12deg) translateX(-5%);
-    opacity: 0.55;
+    transform: rotate(-12deg) translateX(-6%);
+    opacity: 0.6;
   }
   100% {
-    transform: rotate(-6deg) translateX(5%);
-    opacity: 0.9;
+    transform: rotate(-5deg) translateX(6%);
+    opacity: 1;
   }
 }
 
-@keyframes floatCorner {
+@keyframes floatCornerLeft {
   0% {
-    transform: rotate(-8deg) translateY(0);
+    transform: rotate(-7deg) translateY(0px);
+    box-shadow:
+      0 0 0 1px rgba(200, 162, 255, 0.25),
+      0 12px 30px rgba(0, 0, 0, 0.45),
+      0 0 20px rgba(255, 127, 191, 0.25);
   }
   100% {
-    transform: rotate(-5deg) translateY(10px);
+    transform: rotate(-4deg) translateY(12px);
+    box-shadow:
+      0 0 0 1px rgba(200, 162, 255, 0.4),
+      0 18px 40px rgba(0, 0, 0, 0.5),
+      0 0 30px rgba(255, 127, 191, 0.45);
   }
+}
+
+@keyframes floatCornerRight {
+  0% {
+    transform: rotate(7deg) translateY(0px);
+    box-shadow:
+      0 0 0 1px rgba(200, 162, 255, 0.25),
+      0 12px 30px rgba(0, 0, 0, 0.45),
+      0 0 20px rgba(200, 162, 255, 0.25);
+  }
+  100% {
+    transform: rotate(4deg) translateY(14px);
+    box-shadow:
+      0 0 0 1px rgba(200, 162, 255, 0.45),
+      0 18px 40px rgba(0, 0, 0, 0.5),
+      0 0 35px rgba(200, 162, 255, 0.5);
+  }
+}
+
+/* Floating star particles */
+.star {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  animation: starFloat var(--duration, 6s) ease-in-out var(--delay, 0s) infinite alternate;
+}
+
+@keyframes starFloat {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: var(--opacity-start, 0.4);
+  }
+  50% {
+    opacity: var(--opacity-peak, 0.9);
+  }
+  100% {
+    transform: translateY(var(--travel, -25px)) scale(var(--scale-end, 1.3));
+    opacity: var(--opacity-start, 0.4);
+  }
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.4); }
 }
 
 .nav {
@@ -309,6 +420,7 @@ main .aurora {
   }
 }
 
+/* ── Tablet (650px – 900px) ─────────────────────────────────────── */
 @media (width > 650px) and (width < 900px) {
   .content {
     & .title {
@@ -318,6 +430,7 @@ main .aurora {
       font-size: 0.8rem;
     }
   }
+
   .item {
     width: 160px;
     height: 270px;
@@ -338,36 +451,169 @@ main .aurora {
   }
 }
 
+/* ── Mobile (< 650px) ───────────────────────────────────────────── */
 @media (width < 650px) {
-  .content {
-    left: 1.5rem;
-    width: min(75vw, 320px);
 
-    & .title {
-      font-size: 1rem;
-    }
-    & .description {
-      font-size: 0.85rem;
-      padding: 12px 14px;
-      margin: 0.6rem 0 1rem;
-    }
+  /* Body & main fill the full viewport */
+  body {
+    min-height: 100dvh;
+    display: block;
   }
-  .item {
-    width: 130px;
-    height: 220px;
 
+  main {
+    min-height: 100dvh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Shrink corner photos so they don't block content */
+  .corner-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    opacity: 0.65;
+    border-width: 1.5px;
+  }
+
+  .corner-image-left {
+    left: 0.6rem;
+    top: 0.6rem;
+  }
+
+  .corner-image-right {
+    right: 0.6rem;
+    top: 0.6rem;
+  }
+
+  /*
+   * Slider: stack fills a fixed portion of the screen height.
+   * The active card (#1 + #2) will fill this container.
+   */
+  #slider {
+    position: relative;
+    width: 100%;
+    height: 55dvh;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  /*
+   * Reset ALL items to be absolutely placed inside
+   * the now-bounded #slider container.
+   */
+  .item {
+    width: 140px;
+    height: 210px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    /* Active card: full-width, full-height of the slider zone */
+    &:nth-child(1),
+    &:nth-child(2) {
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      transform: none;
+      border-radius: 0;
+    }
+
+    /* Side preview cards – just barely peeking from the right */
     &:nth-child(3) {
-      left: 50%;
+      left: calc(100% - 50px);
+      opacity: 0.55;
     }
     &:nth-child(4) {
-      left: calc(50% + 140px);
-    }
-    &:nth-child(5) {
-      left: calc(50% + 280px);
-    }
-    &:nth-child(n+6) {
-      left: calc(50% + 420px);
+      left: calc(100% + 100px);
       opacity: 0;
     }
+    &:nth-child(n+5) {
+      left: calc(100% + 250px);
+      opacity: 0;
+    }
+  }
+
+  /* Hide the in-card content panels on mobile — we use #mobile-content instead */
+  .content {
+    display: none !important;
+  }
+
+  /* Mobile content panel — lives below the slider, outside overflow:hidden */
+  #mobile-content {
+    display: none; /* shown via JS */
+    flex-shrink: 0;
+    width: 100%;
+    padding: 1.2rem 1.4rem 0.6rem;
+    z-index: 4;
+
+    .mobile-content-inner {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .title {
+      font-family: "Protest Strike", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      text-transform: uppercase;
+      color: #ffffff;
+      letter-spacing: 0.06em;
+      font-size: 1.15rem;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 10px rgba(15, 23, 42, 0.7);
+    }
+
+    .description {
+      font-family: "Inter", sans-serif;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+      background: linear-gradient(135deg, rgba(255, 127, 191, 0.16), rgba(200, 162, 255, 0.14));
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin: 0.4rem 0 0;
+      max-height: 26dvh;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,127,191,0.4) transparent;
+    }
+
+    &.animate-in {
+      animation: showMobile 0.55s ease-out forwards;
+    }
+  }
+
+  /* Nav: always anchored to the bottom of main */
+  .nav {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin-top: auto;
+    padding: 0.85rem 0 1.2rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    background: linear-gradient(
+      to top,
+      rgba(12, 6, 24, 0.85) 0%,
+      transparent 100%
+    );
+  }
+}
+
+@keyframes showMobile {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

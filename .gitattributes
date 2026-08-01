@@ -1,0 +1,22 @@
+# Normalize line endings to LF in the repo for all text files.
+# Git will convert to CRLF on Windows checkout automatically (core.autocrlf),
+# but the canonical form stored in the repo will always be LF.
+* text=auto eol=lf
+
+# Explicitly force LF for web source files
+*.html    text eol=lf
+*.css     text eol=lf
+*.js      text eol=lf
+*.json    text eol=lf
+*.md      text eol=lf
+
+# Treat binary files as binary — no conversion
+*.jpg     binary
+*.jpeg    binary
+*.png     binary
+*.gif     binary
+*.ico     binary
+*.woff    binary
+*.woff2   binary
+*.ttf     binary
+*.eot     binary
