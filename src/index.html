@@ -10,7 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Protest+Strike&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Protest+Strike&display=swap" rel="stylesheet">
     <script type="module" src="assets/js/index.js"></script>
 </head>
@@ -20,9 +19,13 @@
         <img class="corner-image corner-image-left" src="assets/img/image_00.jpg" alt="Decorative corner image" />
         <img class="corner-image corner-image-right" src="assets/img/image_01.jpg" alt="Decorative corner image" />
         <ul id="slider"></ul>
-        <nav class="nav">
-            <i class="btn prev ri-arrow-left-line"></i>
-            <i class="btn next ri-arrow-right-line"></i>
+        <nav class="nav" aria-label="Card navigation">
+            <button type="button" class="btn prev" aria-label="Previous card">
+                <i class="ri-arrow-left-line" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn next" aria-label="Next card">
+                <i class="ri-arrow-right-line" aria-hidden="true"></i>
+            </button>
         </nav>
     </main>
 </body>

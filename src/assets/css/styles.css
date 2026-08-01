@@ -170,7 +170,7 @@ main .aurora {
   &:nth-child(5) {
     left: calc(50% + 440px);
   }
-  &:nth-child(6) {
+  &:nth-child(n+6) {
     left: calc(50% + 660px);
     opacity: 0;
   }
@@ -279,11 +279,18 @@ main .aurora {
   user-select: none;
 
   & .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    outline: none;
+    font-size: 1.25rem;
     background: linear-gradient(135deg, var(--kuromi-pink), var(--kuromi-lilac));
     color: rgba(255, 255, 255, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    margin: 0 0.25rem;
-    padding: 0.75rem;
+    margin: 0 0.35rem;
+    padding: 0;
     border-radius: 50%;
     cursor: pointer;
     box-shadow: 0 8px 20px rgba(255, 127, 191, 0.25);
@@ -294,6 +301,11 @@ main .aurora {
       transform: translateY(-2px);
       box-shadow: 0 10px 24px rgba(255, 127, 191, 0.35);
     }
+
+    &:focus-visible {
+      outline: 2px solid var(--kuromi-pink);
+      outline-offset: 3px;
+    }
   }
 }
 
@@ -303,7 +315,7 @@ main .aurora {
       font-size: 1rem;
     }
     & .description {
-      font-size: 0.7rem;
+      font-size: 0.8rem;
     }
   }
   .item {
@@ -319,7 +331,7 @@ main .aurora {
     &:nth-child(5) {
       left: calc(50% + 340px);
     }
-    &:nth-child(6) {
+    &:nth-child(n+6) {
       left: calc(50% + 510px);
       opacity: 0;
     }
@@ -328,11 +340,16 @@ main .aurora {
 
 @media (width < 650px) {
   .content {
+    left: 1.5rem;
+    width: min(75vw, 320px);
+
     & .title {
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
     & .description {
-      font-size: 0.65rem;
+      font-size: 0.85rem;
+      padding: 12px 14px;
+      margin: 0.6rem 0 1rem;
     }
   }
   .item {
@@ -348,7 +365,7 @@ main .aurora {
     &:nth-child(5) {
       left: calc(50% + 280px);
     }
-    &:nth-child(6) {
+    &:nth-child(n+6) {
       left: calc(50% + 420px);
       opacity: 0;
     }

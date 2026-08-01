@@ -7,7 +7,7 @@
     "start": "yarn dev",
     "dev": "parcel",
     "build": "parcel build",
-    "clean": "rm -rf dist"
+    "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\""
   },
   "staticFiles": {
     "staticPath": "src/assets/img",
