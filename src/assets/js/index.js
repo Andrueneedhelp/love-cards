@@ -98,6 +98,9 @@ mobilePanel.id = 'mobile-content';
 mobilePanel.setAttribute('aria-live', 'polite');
 slider.insertAdjacentElement('afterend', mobilePanel);
 
+// Desktop photo description panel reference
+const descPanel = document.getElementById('photo-desc-panel');
+
 function isMobile() {
     return window.matchMedia('(max-width: 649px)').matches;
 }
@@ -124,6 +127,39 @@ function updateMobilePanel() {
     mobilePanel.classList.remove('animate-in');
     void mobilePanel.offsetWidth;
     mobilePanel.classList.add('animate-in');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Desktop description panel update — Top card shows photo title+desc & photo
+// ─────────────────────────────────────────────────────────────────────────────
+function updateDescPanel() {
+    if (!descPanel) return;
+    if (isMobile()) {
+        descPanel.style.display = 'none';
+        return;
+    }
+    descPanel.style.display = ''; // restore CSS default (flex)
+    const items = slider.querySelectorAll('.item');
+    if (items.length < 2) return;
+    const activeItem = items[1];
+
+    // ── Text content ─────────────────────────────────────────────
+    const titleEl = descPanel.querySelector('.pdp-title');
+    const descEl = descPanel.querySelector('.pdp-desc');
+    if (titleEl) titleEl.textContent = activeItem.querySelector('.title')?.textContent ?? '';
+    if (descEl) descEl.textContent = activeItem.querySelector('.description')?.textContent ?? '';
+
+    // ── Active photo ─────────────────────────────────────────────
+    // Mirror the card's background-image onto .pdp-photo-img
+    const photoEl = descPanel.querySelector('.pdp-photo-img');
+    if (photoEl) {
+        photoEl.style.backgroundImage = activeItem.style.backgroundImage;
+    }
+
+    // Trigger entrance animation on content change
+    descPanel.classList.remove('pdp-animate');
+    void descPanel.offsetWidth;
+    descPanel.classList.add('pdp-animate');
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -155,6 +191,7 @@ data.forEach((item) => {
 
 // Initial mobile panel render
 updateMobilePanel();
+updateDescPanel();
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Navigation logic
@@ -184,6 +221,7 @@ function nextCard() {
         if (incoming) incoming.classList.remove('no-transition');
         triggerCardEnter(incoming);
         updateMobilePanel();
+        updateDescPanel();
     }
 }
 
@@ -205,6 +243,7 @@ function prevCard() {
         toFront.classList.remove('no-transition');
         triggerCardEnter(incoming); // bubble on the now-active card
         updateMobilePanel();
+        updateDescPanel();
     }
 }
 
@@ -239,10 +278,10 @@ slider.addEventListener('click', (e) => {
     //   nth-child(1) = card just before clicked (becomes new background)
     //   nth-child(2) = clicked card (becomes new active)
     //   nth-child(3+) = remaining cards in their correct relative order
-    const bgCard    = items[clickedIndex - 1];
+    const bgCard = items[clickedIndex - 1];
     const afterSlot = items.slice(clickedIndex + 1);           // cards after clicked → new peek stack
-    const beforeBg  = items.slice(0, clickedIndex - 1);       // cards before bg → cycle to end
-    const newOrder  = [bgCard, clickedItem, ...afterSlot, ...beforeBg];
+    const beforeBg = items.slice(0, clickedIndex - 1);       // cards before bg → cycle to end
+    const newOrder = [bgCard, clickedItem, ...afterSlot, ...beforeBg];
 
     // Step 1: Disable all transitions and float animations so cards jump
     //         instantly to their correct final positions with no visible movement.
@@ -261,6 +300,7 @@ slider.addEventListener('click', (e) => {
     // Step 4: Play the bubble-enter animation on the newly active card.
     triggerCardEnter(clickedItem);
     updateMobilePanel();
+    updateDescPanel();
 });
 
 // Touch swipe gestures
@@ -286,15 +326,15 @@ document.addEventListener('dragstart', (e) => {
 });
 
 // Re-evaluate on viewport resize
-window.addEventListener('resize', updateMobilePanel);
+window.addEventListener('resize', () => { updateMobilePanel(); updateDescPanel(); });
 
 // ─────────────────────────────────────────────────────────────────────────────
 // INTRO OVERLAY — Gift box opening screen
 // ─────────────────────────────────────────────────────────────────────────────
 (function initIntro() {
-    const overlay   = document.getElementById('intro-overlay');
-    const gift      = document.getElementById('gift');
-    const wrapper   = document.getElementById('giftWrapper');
+    const overlay = document.getElementById('intro-overlay');
+    const gift = document.getElementById('gift');
+    const wrapper = document.getElementById('giftWrapper');
     const burstRing = document.getElementById('burstRing');
     const introStars = document.getElementById('introStars');
     if (!overlay || !gift || !wrapper) return;
@@ -307,19 +347,19 @@ window.addEventListener('resize', updateMobilePanel);
     for (let i = 0; i < 40; i++) {
         const s = document.createElement('div');
         s.className = 'intro-star-dot';
-        const sz      = rand(2, 6);
-        const color   = INTRO_STAR_COLORS[Math.floor(Math.random() * INTRO_STAR_COLORS.length)];
-        const opA     = rand(0.15, 0.45).toFixed(2);
-        const opB     = rand(0.6, 1).toFixed(2);
-        const dur     = rand(2.5, 7).toFixed(1);
-        const delay   = rand(0, 5).toFixed(1);
+        const sz = rand(2, 6);
+        const color = INTRO_STAR_COLORS[Math.floor(Math.random() * INTRO_STAR_COLORS.length)];
+        const opA = rand(0.15, 0.45).toFixed(2);
+        const opB = rand(0.6, 1).toFixed(2);
+        const dur = rand(2.5, 7).toFixed(1);
+        const delay = rand(0, 5).toFixed(1);
         s.style.cssText = `
             width:${sz}px; height:${sz}px;
-            left:${rand(1,99)}%; top:${rand(1,95)}%;
+            left:${rand(1, 99)}%; top:${rand(1, 95)}%;
             background:${color.replace('VAL', opB)};
             --dur:${dur}s; --delay:${delay}s;
             --op-start:${opA}; --op-end:${opB};
-            ${Math.random() > 0.6 ? `box-shadow:0 0 ${sz*2}px ${sz}px ${color.replace('VAL','0.5')};` : ''}
+            ${Math.random() > 0.6 ? `box-shadow:0 0 ${sz * 2}px ${sz}px ${color.replace('VAL', '0.5')};` : ''}
         `;
         introStars.appendChild(s);
     }
@@ -346,11 +386,14 @@ window.addEventListener('resize', updateMobilePanel);
                 overlay.classList.add('fade-out');
                 overlay.addEventListener('transitionend', () => {
                     overlay.remove();
+                    // Unlock page scrolling
+                    document.documentElement.classList.remove('scroll-locked');
                     // Signal CSS to start love-section entrance animations
                     document.body.classList.add('intro-complete');
-                    // Init the two new sections
+                    // Init the three sections
                     initLoveSection();
                     initFlowerSection();
+                    initGalleryReveal();
                 }, { once: true });
             }, 600);
         }, { once: true });
@@ -371,38 +414,38 @@ window.addEventListener('resize', updateMobilePanel);
 //   src    — path to your audio file (e.g. "audio/song.mp3"), leave "" if none
 // ─────────────────────────────────────────────────────────────────────────────
 const SONGS = [
-    { title: 'Your Geek in the Pink',     artist: 'Just for you 🤓',  art: 'images/image_05.jpg', src: '' },
-    { title: 'Happy Girlfriends Day!',    artist: 'With love 💖',     art: 'images/image_00.jpg', src: '' },
-    { title: 'Nayeon is Life',            artist: 'Always 💘',        art: 'images/image_01.jpg', src: '' },
-    { title: 'Opensource is Love',        artist: 'Together 🤝',      art: 'images/image_02.jpg', src: '' },
-    { title: 'Love Countdown',            artist: 'Forever ⏳',       art: 'images/image_03.jpg', src: '' },
-    { title: "I'll Keep Building",        artist: 'For us 🛠️',       art: 'images/image_04.jpg', src: '' },
+    { title: 'Ibang Planeta',              artist: 'Just for you 🤓', art: 'images/image_05.jpg', src: 'audio/Ibang%20Planeta.mp3' },
+    { title: 'Just the Way You Are',       artist: 'With love 💖',    art: 'images/image_00.jpg', src: 'audio/Just%20the%20Way%20You%20Are.mp3' },
+    { title: 'Kabisado',                   artist: 'Always 💘',       art: 'images/image_01.jpg', src: 'audio/Kabisado.mp3' },
+    { title: 'Libu-Libong Buwan (Uuwian)', artist: 'Together 🤝',     art: 'images/image_02.jpg', src: 'audio/Libu-Libong%20Buwan%20%28Uuwian%29.mp3' },
+    { title: 'Panata',                     artist: 'Forever ⏳',      art: 'images/image_03.jpg', src: 'audio/Panata.mp3' },
+    { title: 'Pinipili',                   artist: 'For us 🛠️',      art: 'images/image_04.jpg', src: 'audio/Pinipili.mp3' },
 ];
 
 (function initPlayer() {
     if (!SONGS.length) return;
 
-    const audioEl         = document.getElementById('audioEl');
-    const playerEl        = document.getElementById('music-player');
-    const artMini         = document.getElementById('playerArtMini');
-    const artLarge        = document.getElementById('playerArtLarge');
-    const titleMini       = document.getElementById('playerTitleMini');
-    const artistMini      = document.getElementById('playerArtistMini');
-    const titleFull       = document.getElementById('playerTitleFull');
-    const artistFull      = document.getElementById('playerArtistFull');
-    const playIconMini    = document.getElementById('playerPlayIcon');
-    const playIconFull    = document.getElementById('playerPlayIconFull');
-    const trackFill       = document.getElementById('playerTrackFill');
-    const trackBar        = document.getElementById('playerTrack');
-    const currentTimeEl   = document.getElementById('playerCurrentTime');
-    const durationEl      = document.getElementById('playerDuration');
-    const volumeSlider    = document.getElementById('playerVolume');
-    const expandBtn       = document.getElementById('playerExpandBtn');
+    const audioEl = document.getElementById('audioEl');
+    const playerEl = document.getElementById('music-player');
+    const artMini = document.getElementById('playerArtMini');
+    const artLarge = document.getElementById('playerArtLarge');
+    const titleMini = document.getElementById('playerTitleMini');
+    const artistMini = document.getElementById('playerArtistMini');
+    const titleFull = document.getElementById('playerTitleFull');
+    const artistFull = document.getElementById('playerArtistFull');
+    const playIconMini = document.getElementById('playerPlayIcon');
+    const playIconFull = document.getElementById('playerPlayIconFull');
+    const trackFill = document.getElementById('playerTrackFill');
+    const trackBar = document.getElementById('playerTrack');
+    const currentTimeEl = document.getElementById('playerCurrentTime');
+    const durationEl = document.getElementById('playerDuration');
+    const volumeSlider = document.getElementById('playerVolume');
+    const expandBtn = document.getElementById('playerExpandBtn');
     if (!audioEl || !playerEl) return;
 
     let currentIndex = 0;
-    let isPlaying    = false;
-    let rafId        = null;
+    let isPlaying = false;
+    let rafId = null;
 
     // ── Helpers
     function formatTime(sec) {
@@ -414,8 +457,8 @@ const SONGS = [
 
     function setArt(url) {
         const bg = url ? `url(${url})` : '';
-        if (artMini)   { artMini.style.backgroundImage   = bg; artMini.style.backgroundSize = 'cover'; }
-        if (artLarge)  { artLarge.style.backgroundImage  = bg; artLarge.style.backgroundSize = 'cover'; }
+        if (artMini) { artMini.style.backgroundImage = bg; artMini.style.backgroundSize = 'cover'; }
+        if (artLarge) { artLarge.style.backgroundImage = bg; artLarge.style.backgroundSize = 'cover'; }
     }
 
     function setPlayState(playing) {
@@ -431,7 +474,7 @@ const SONGS = [
         const pct = (audioEl.currentTime / audioEl.duration) * 100;
         if (trackFill) trackFill.style.width = `${pct}%`;
         if (currentTimeEl) currentTimeEl.textContent = formatTime(audioEl.currentTime);
-        if (durationEl)    durationEl.textContent    = formatTime(audioEl.duration);
+        if (durationEl) durationEl.textContent = formatTime(audioEl.duration);
         if (isPlaying) rafId = requestAnimationFrame(updateProgress);
     }
 
@@ -441,10 +484,10 @@ const SONGS = [
         currentIndex = index;
 
         // Update UI
-        if (titleMini)   titleMini.textContent  = song.title;
-        if (artistMini)  artistMini.textContent = song.artist;
-        if (titleFull)   titleFull.textContent  = song.title;
-        if (artistFull)  artistFull.textContent = song.artist;
+        if (titleMini) titleMini.textContent = song.title;
+        if (artistMini) artistMini.textContent = song.artist;
+        if (titleFull) titleFull.textContent = song.title;
+        if (artistFull) artistFull.textContent = song.artist;
         setArt(song.art);
 
         // Load audio if src provided
@@ -459,7 +502,7 @@ const SONGS = [
             setPlayState(false);
             if (trackFill) trackFill.style.width = '0%';
             if (currentTimeEl) currentTimeEl.textContent = '0:00';
-            if (durationEl)    durationEl.textContent    = '0:00';
+            if (durationEl) durationEl.textContent = '0:00';
         }
     }
 
@@ -547,7 +590,7 @@ const SONGS = [
 // Called once after the gift overlay fades out.
 // ─────────────────────────────────────────────────────────────────────────────
 function initLoveSection() {
-    const lsStars  = document.getElementById('lsStars');
+    const lsStars = document.getElementById('lsStars');
     const lsPetals = document.getElementById('lsPetals');
 
     // Floating star dots
@@ -557,9 +600,9 @@ function initLoveSection() {
             'rgba(255,255,255,V)', 'rgba(220,200,255,V)',
         ];
         for (let i = 0; i < 38; i++) {
-            const s   = document.createElement('div');
+            const s = document.createElement('div');
             s.className = 'ls-star-dot';
-            const sz  = rand(1.5, 4.5);
+            const sz = rand(1.5, 4.5);
             const col = colors[Math.floor(Math.random() * colors.length)];
             const opA = rand(0.2, 0.5).toFixed(2);
             const opB = rand(0.65, 1.0).toFixed(2);
@@ -571,7 +614,7 @@ function initLoveSection() {
                 background:${col.replace('V', opB)};
                 --op-a:${opA}; --op-b:${opB};
                 animation: lsStar ${dur}s ease-in-out ${del}s infinite alternate;
-                ${Math.random() > 0.65 ? `box-shadow:0 0 ${(sz*2).toFixed(1)}px ${sz}px ${col.replace('V','0.5')};` : ''}
+                ${Math.random() > 0.65 ? `box-shadow:0 0 ${(sz * 2).toFixed(1)}px ${sz}px ${col.replace('V', '0.5')};` : ''}
             `;
             lsStars.appendChild(s);
         }
@@ -586,9 +629,9 @@ function initLoveSection() {
             'rgba(255,210,235,0.70)',
         ];
         for (let i = 0; i < 16; i++) {
-            const p   = document.createElement('div');
+            const p = document.createElement('div');
             p.className = 'ls-petal';
-            const sz  = rand(8, 18).toFixed(0);
+            const sz = rand(8, 18).toFixed(0);
             const col = petalColors[Math.floor(Math.random() * petalColors.length)];
             const dur = rand(7, 15).toFixed(1);
             const del = rand(0, 11).toFixed(1);
@@ -606,14 +649,14 @@ function initLoveSection() {
 // Called once after the gift overlay fades out.
 // ─────────────────────────────────────────────────────────────────────────────
 function initFlowerSection() {
-    const fsStars    = document.getElementById('fsStars');
-    const fsHearts   = document.getElementById('fsHearts');
+    const fsStars = document.getElementById('fsStars');
+    const fsHearts = document.getElementById('fsHearts');
     const fsSparkles = document.getElementById('fsSparkles');
 
     // Ambient star dots
     if (fsStars) {
         for (let i = 0; i < 30; i++) {
-            const s  = document.createElement('div');
+            const s = document.createElement('div');
             s.className = 'fs-star-dot';
             const sz = rand(1.5, 4);
             const op = rand(0.3, 0.85).toFixed(2);
@@ -637,8 +680,8 @@ function initFlowerSection() {
             h.className = 'fs-heart';
             h.setAttribute('aria-hidden', 'true');
             h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-            const hs  = rand(0.7, 1.8).toFixed(1);
-            const hd  = rand(5, 13).toFixed(1);
+            const hs = rand(0.7, 1.8).toFixed(1);
+            const hd = rand(5, 13).toFixed(1);
             const del = rand(0, 7).toFixed(1);
             h.style.cssText = `left:${rand(3, 92)}%; --hs:${hs}rem; --hd:${hd}s; --delay:${del}s;`;
             fsHearts.appendChild(h);
@@ -648,10 +691,10 @@ function initFlowerSection() {
     // Sparkle dots
     if (fsSparkles) {
         for (let i = 0; i < 22; i++) {
-            const s  = document.createElement('div');
+            const s = document.createElement('div');
             s.className = 'fs-sparkle';
-            const sz  = rand(2, 6).toFixed(1);
-            const sd  = rand(2, 5).toFixed(1);
+            const sz = rand(2, 6).toFixed(1);
+            const sd = rand(2, 5).toFixed(1);
             const del = rand(0, 4.5).toFixed(1);
             s.style.cssText = `
                 left:${rand(0, 100)}%; top:${rand(5, 95)}%;
@@ -682,4 +725,38 @@ function initFlowerSection() {
     }, { threshold: 0.15, root: null });
 
     revealItems.forEach(item => observer.observe(item));
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GALLERY REVEAL — Scroll-triggered entrance for the description panel
+// and slider zone. IntersectionObserver fires when user scrolls to the
+// gallery section. Called once after the gift overlay fades out.
+// ─────────────────────────────────────────────────────────────────────────────
+function initGalleryReveal() {
+    const gallerySection = document.getElementById('gallery-section');
+    const panel = document.getElementById('photo-desc-panel');
+    const sliderZone = document.querySelector('.slider-zone');
+
+    function revealGallery() {
+        panel?.classList.add('gallery-revealed');
+        sliderZone?.classList.add('gallery-revealed');
+        updateDescPanel(); // populate + animate the description panel
+    }
+
+    if (!gallerySection || !('IntersectionObserver' in window)) {
+        // Fallback: reveal immediately
+        revealGallery();
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                revealGallery();
+                observer.unobserve(entry.target); // once revealed, stop watching
+            }
+        });
+    }, { threshold: 0.2, root: null });
+
+    observer.observe(gallerySection);
 }

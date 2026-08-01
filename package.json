@@ -9,11 +9,18 @@
     "build": "parcel build",
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\""
   },
-  "staticFiles": {
-    "staticPath": "src/assets/img",
-    "staticOutPath": "images",
-    "watcherGlob": "**"
-  },
+  "staticFiles": [
+    {
+      "staticPath": "src/assets/img",
+      "staticOutPath": "images",
+      "watcherGlob": "**"
+    },
+    {
+      "staticPath": "src/assets/audio",
+      "staticOutPath": "audio",
+      "watcherGlob": "**"
+    }
+  ],
   "keywords": [],
   "author": "",
   "license": "GPL-3.0",

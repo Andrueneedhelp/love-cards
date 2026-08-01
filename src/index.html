@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-locked">
+
 <head>
     <meta charset="UTF-8">
     <title>Love Cards 💖 — For You, My Everything</title>
@@ -7,12 +8,15 @@
     <meta name="description" content="A romantic love letter — crafted just for you, my everything">
     <link rel="icon" href="assets/icons/icon.ico">
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Protest+Strike&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Protest+Strike&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
     <script type="module" src="assets/js/index.js"></script>
 </head>
+
 <body>
 
     <!-- ── Intro / Opening Screen (fixed, z:10000) ───────────────── -->
@@ -29,6 +33,8 @@
                             <div class="bow-knot"></div>
                         </div>
                         <div class="gift-ribbon-lid"></div>
+                        <!-- Kuromi face emoji centered on the lid -->
+                        <span class="kuromi-face" aria-hidden="true">😺</span>
                     </div>
                     <!-- Box body -->
                     <div class="gift-body">
@@ -83,8 +89,11 @@
                     <h1 class="ls-heading">For&nbsp;You,<br><em>My Everything</em></h1>
                     <div class="ls-divider" aria-hidden="true">💗</div>
                     <div class="ls-body">
-                        <p>From the moment you came into my life, every single ordinary day became something I'll treasure forever. You are my favorite notification, my warmest thought, and the reason I smile at absolutely nothing at all.</p>
-                        <p>I made this little corner of the internet just for you — scroll down and see what I built, because you deserve the whole world.</p>
+                        <p>From the moment you came into my life, every single ordinary day became something I'll
+                            treasure forever. You are my favorite notification, my warmest thought, and the reason I
+                            smile at absolutely nothing at all.</p>
+                        <p>I made this little corner of the internet just for you — scroll down and see what I built,
+                            because you deserve the whole world.</p>
                         <p class="ls-signature">— Waren&nbsp;&nbsp;💌</p>
                     </div>
                 </div>
@@ -99,30 +108,58 @@
 
         <!-- ━━━━ SECTION 2 — 📸 Photo Gallery ━━━━━━━━━━━━━━━━━━━━━━ -->
         <section id="gallery-section" class="pg-section" aria-label="Photo gallery">
-            <!--
-                IMPORTANT: <main> and ALL its children are 100% UNCHANGED.
-                Only the wrapper section was added. The gallery JS, CSS, and
-                behaviour are completely untouched.
-            -->
             <main>
+                <!-- Atmospheric backgrounds — span full main width -->
                 <div class="aurora"></div>
                 <div class="aurora-bottom"></div>
                 <div class="star-field" id="starField" aria-hidden="true"></div>
-                <img class="corner-image corner-image-left" src="assets/img/image_00.jpg" alt="Decorative corner image" draggable="false" />
-                <img class="corner-image corner-image-right" src="assets/img/image_01.jpg" alt="Decorative corner image" draggable="false" />
+                <!-- Corner and Kuromi decorations — position:absolute inside main -->
+                <img class="corner-image corner-image-left" src="assets/img/image_00.jpg" alt="Decorative corner image"
+                    draggable="false" />
+                <img class="corner-image corner-image-right" src="assets/img/image_01.jpg" alt="Decorative corner image"
+                    draggable="false" />
                 <img class="kuromi-left-decor" src="assets/img/kuromi_left.png" alt="Kuromi" draggable="false" />
-                <img class="kuromi-chibi-decor" src="assets/img/kuromi_chibi.png" alt="Kuromi Chibi" draggable="false" />
-                <img class="kuromi-right-decor" src="assets/img/kuromi_right.png" alt="Kuromi Waving" draggable="false" />
-                <img class="kuromi-right-small-decor" src="assets/img/kuromi_right_small.png" alt="Kuromi Heart" draggable="false" />
-                <ul id="slider"></ul>
-                <nav class="nav" aria-label="Card navigation">
-                    <button type="button" class="btn prev" aria-label="Previous card">
-                        <i class="ri-arrow-left-line" aria-hidden="true"></i>
-                    </button>
-                    <button type="button" class="btn next" aria-label="Next card">
-                        <i class="ri-arrow-right-line" aria-hidden="true"></i>
-                    </button>
-                </nav>
+                <img class="kuromi-chibi-decor" src="assets/img/kuromi_chibi.png" alt="Kuromi Chibi"
+                    draggable="false" />
+                <img class="kuromi-right-decor" src="assets/img/kuromi_right.png" alt="Kuromi Waving"
+                    draggable="false" />
+                <img class="kuromi-right-small-decor" src="assets/img/kuromi_right_small.png" alt="Kuromi Heart"
+                    draggable="false" />
+
+                <!-- ── Photo description panel (Top card with text + active photo) ── -->
+                <div id="photo-desc-panel" aria-live="polite" aria-label="Photo description">
+                    <div class="pdp-inner">
+                        <!-- ── Text column ── -->
+                        <div class="pdp-text">
+                            <p class="pdp-eyebrow">✨ &nbsp;photo love letter&nbsp; ✨</p>
+                            <h2 class="pdp-title"></h2>
+                            <div class="pdp-divider" aria-hidden="true">💗</div>
+                            <p class="pdp-desc"></p>
+                            <div class="pdp-nav-hint" aria-hidden="true">
+                                <span class="pdp-arrow">←</span>
+                                <span class="pdp-nav-label">navigate through photos</span>
+                                <span class="pdp-arrow">→</span>
+                            </div>
+                        </div>
+                        <!-- ── Photo column (active image shown here) ── -->
+                        <div class="pdp-photo-frame" aria-hidden="true">
+                            <div class="pdp-photo-img"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── Slider zone (Envelope row + navigation) ── -->
+                <div class="slider-zone">
+                    <ul id="slider"></ul>
+                    <nav class="nav" aria-label="Card navigation">
+                        <button type="button" class="btn prev" aria-label="Previous card">
+                            <i class="ri-arrow-left-line" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn next" aria-label="Next card">
+                            <i class="ri-arrow-right-line" aria-hidden="true"></i>
+                        </button>
+                    </nav>
+                </div>
             </main>
         </section>
 
@@ -133,8 +170,8 @@
             <div class="fs-bg" aria-hidden="true">
                 <div class="fs-aurora"></div>
                 <!-- Stars, hearts, sparkles generated by JS -->
-                <div class="fs-stars"    id="fsStars"></div>
-                <div class="fs-hearts"   id="fsHearts"></div>
+                <div class="fs-stars" id="fsStars"></div>
+                <div class="fs-hearts" id="fsHearts"></div>
                 <div class="fs-sparkles" id="fsSparkles"></div>
             </div>
 
@@ -147,12 +184,18 @@
                     <!-- Sunflower A (left) -->
                     <figure class="fs-flower-wrap fs-fw-a reveal-item" aria-label="Sunflower">
                         <div class="css-sunflower">
-                            <div class="sf-petal"></div><div class="sf-petal"></div>
-                            <div class="sf-petal"></div><div class="sf-petal"></div>
-                            <div class="sf-petal"></div><div class="sf-petal"></div>
-                            <div class="sf-petal"></div><div class="sf-petal"></div>
-                            <div class="sf-petal"></div><div class="sf-petal"></div>
-                            <div class="sf-petal"></div><div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
                             <div class="sf-center"></div>
                         </div>
                         <div class="flower-stem"></div>
@@ -162,9 +205,12 @@
                     <!-- Lily A (pink) -->
                     <figure class="fs-flower-wrap fs-fw-b reveal-item" aria-label="Pink lily">
                         <div class="css-lily">
-                            <div class="lily-petal"></div><div class="lily-petal"></div>
-                            <div class="lily-petal"></div><div class="lily-petal"></div>
-                            <div class="lily-petal"></div><div class="lily-petal"></div>
+                            <div class="lily-petal"></div>
+                            <div class="lily-petal"></div>
+                            <div class="lily-petal"></div>
+                            <div class="lily-petal"></div>
+                            <div class="lily-petal"></div>
+                            <div class="lily-petal"></div>
                             <div class="lily-center"></div>
                         </div>
                         <div class="flower-stem flower-stem-pink"></div>
@@ -182,9 +228,12 @@
                     <!-- Lily B (orange) -->
                     <figure class="fs-flower-wrap fs-fw-c reveal-item" aria-label="Orange lily">
                         <div class="css-lily css-lily-orange">
-                            <div class="lily-petal"></div><div class="lily-petal"></div>
-                            <div class="lily-petal"></div><div class="lily-petal"></div>
-                            <div class="lily-petal"></div><div class="lily-petal"></div>
+                            <div class="lily-petal"></div>
+                            <div class="lily-petal"></div>
+                            <div class="lily-petal"></div>
+                            <div class="lily-petal"></div>
+                            <div class="lily-petal"></div>
+                            <div class="lily-petal"></div>
                             <div class="lily-center lily-center-orange"></div>
                         </div>
                         <div class="flower-stem flower-stem-orange"></div>
@@ -194,12 +243,18 @@
                     <!-- Sunflower B (right, smaller) -->
                     <figure class="fs-flower-wrap fs-fw-d reveal-item" aria-label="Sunflower">
                         <div class="css-sunflower css-sunflower-sm">
-                            <div class="sf-petal"></div><div class="sf-petal"></div>
-                            <div class="sf-petal"></div><div class="sf-petal"></div>
-                            <div class="sf-petal"></div><div class="sf-petal"></div>
-                            <div class="sf-petal"></div><div class="sf-petal"></div>
-                            <div class="sf-petal"></div><div class="sf-petal"></div>
-                            <div class="sf-petal"></div><div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
+                            <div class="sf-petal"></div>
                             <div class="sf-center"></div>
                         </div>
                         <div class="flower-stem"></div>
@@ -235,11 +290,13 @@
                 <span class="player-artist-mini" id="playerArtistMini">—</span>
             </div>
             <div class="player-controls-mini">
-                <button class="player-btn-mini" id="playerPrevMini" aria-label="Previous"><i class="ri-skip-back-mini-fill"></i></button>
+                <button class="player-btn-mini" id="playerPrevMini" aria-label="Previous"><i
+                        class="ri-skip-back-mini-fill"></i></button>
                 <button class="player-btn-mini player-play-mini" id="playerPlayMini" aria-label="Play/Pause">
                     <i class="ri-play-fill" id="playerPlayIcon"></i>
                 </button>
-                <button class="player-btn-mini" id="playerNextMini" aria-label="Next"><i class="ri-skip-forward-mini-fill"></i></button>
+                <button class="player-btn-mini" id="playerNextMini" aria-label="Next"><i
+                        class="ri-skip-forward-mini-fill"></i></button>
             </div>
             <button class="player-expand-btn" id="playerExpandBtn" aria-label="Expand player">
                 <i class="ri-arrow-up-s-line" id="playerExpandIcon"></i>
@@ -275,11 +332,13 @@
             </div>
             <div class="player-volume-row">
                 <i class="ri-volume-down-line player-vol-icon"></i>
-                <input type="range" class="player-volume" id="playerVolume" min="0" max="1" step="0.01" value="0.8" aria-label="Volume">
+                <input type="range" class="player-volume" id="playerVolume" min="0" max="1" step="0.01" value="0.8"
+                    aria-label="Volume">
                 <i class="ri-volume-up-line player-vol-icon"></i>
             </div>
         </div>
     </div>
 
 </body>
+
 </html>
