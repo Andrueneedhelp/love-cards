@@ -421,13 +421,13 @@ const SONGS = [
     { title: 'Panata', artist: 'Johnoy Danao', art: 'images/image_03.jpg', src: 'assets/audio/Panata_spotdown.org.mp3' },
     { title: 'Pinipili', artist: 'MATÉO', art: 'images/image_04.jpg', src: 'assets/audio/Pinipili_spotdown.org.mp3' },
     { title: 'Aphrodite', artist: 'The Ridleys', art: 'images/image_00.jpg', src: 'assets/audio/Aphrodite_spotdown.org.mp3' },
-    { title: 'Autumn', artist: 'NIKI', art: 'images/image_01.jpg', src: 'assets/audio/Autumn_spotdown.org.mp3' },
+    { title: 'Autumn', artist: 'Ben&Ben', art: 'images/image_01.jpg', src: 'assets/audio/Autumn_spotdown.org.mp3' },
     { title: 'Balisong - Transformed', artist: 'Rico Blanco', art: 'images/image_02.jpg', src: 'assets/audio/Balisong - Transformed_spotdown.org.mp3' },
     { title: 'Ikaw At Ako', artist: 'Johnoy Danao', art: 'images/image_03.jpg', src: 'assets/audio/Ikaw At Ako_spotdown.org.mp3' },
     { title: 'Inner Child', artist: 'Toneejay', art: 'images/image_04.jpg', src: 'assets/audio/Inner Child_spotdown.org.mp3' },
     { title: 'Pag-ibig ng Ikaw at Ako', artist: 'TJ Monterde & KZ Tandingan', art: 'images/image_05.jpg', src: 'assets/audio/Pag-ibig ng Ikaw at Ako_spotdown.org.mp3' },
     { title: 'Panaginip', artist: 'Ilaya', art: 'images/image_00.jpg', src: 'assets/audio/Panaginip_spotdown.org.mp3' },
-    { title: 'Ang Balikat At Baywang', artist: 'Dionela', art: 'images/image_01.jpg', src: 'assets/audio/ang balikat at baywang_spotdown.org.mp3' }
+    { title: 'Ang Balikat At Baywang', artist: 'Ian', art: 'images/image_01.jpg', src: 'assets/audio/ang balikat at baywang_spotdown.org.mp3' }
 ];
 
 (function initPlayer() {
